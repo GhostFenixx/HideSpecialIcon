@@ -33,13 +33,6 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <Content Include="SenseAssets\**\*.*">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-      <TargetPath>Sense\%(RecursiveDir)%(Filename)%(Extension)</TargetPath>
-    </Content>
-  </ItemGroup>
-
-  <ItemGroup>
     <Reference Include="0Harmony" />
     <Reference Include="BepInEx" />
   </ItemGroup>
