@@ -8,7 +8,7 @@ namespace HideSpecialIconGrids;
 [BepInPlugin("com.pandahhcorp.hidespecialicongrids", "HideSpecialIconGrids", HideSpecialIconGridsVersion)]
 public class HideSpecialIconGridsPlugin : BaseUnityPlugin
 {
-    public const string HideSpecialIconGridsVersion = "1.1.0.0";
+    public const string HideSpecialIconGridsVersion = "1.1.0.1";
 
     public static HideSpecialIconGridsPlugin Instance { get; private set; }
     public ConfigEntry<Boolean> Enable { get; private set; }
