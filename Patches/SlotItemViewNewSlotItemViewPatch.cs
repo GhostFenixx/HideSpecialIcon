@@ -6,39 +6,40 @@ using EFT;
 using EFT.InventoryLogic;
 using EFT.UI.DragAndDrop;
 
-namespace HideSpecialIcon.Patches {
-	public class SlotItemViewNewSlotItemViewPatch : ModulePatch {
-		protected override MethodBase GetTargetMethod() {
-			return typeof(SlotItemView).GetMethod(nameof(SlotItemView.NewSlotItemView));
-		}
+namespace HideSpecialIconGrids.Patches;
 
-		[PatchPostfix]
-		private static void Postfix(SlotItemView __instance, Item item) {
-			if (!HideSpecialIconPlugin.Instance.Enable.Value) {
-				return;
-			}
+public class SlotItemViewNewSlotItemViewPatch : ModulePatch
+{
+    protected override MethodBase GetTargetMethod()
+    {
+        return typeof(SlotItemView).GetMethod(nameof(SlotItemView.NewSlotItemView));
+    }
 
-			if (!(item is CompoundItem lootItem)) {
-				return;
-			}
+    [PatchPostfix]
+    private static void Postfix(SlotItemView __instance, Item item)
+    {
+        if (!HideSpecialIconGridsPlugin.Instance.Enable.Value)
+            return;
 
-			if (lootItem.Grids != null && lootItem.Grids.Length <= 0) {
-				return;
-			}
+        if (!(item is CompoundItem lootItem))
+            return;
 
-			StaticManager.BeginCoroutine(SlotItemViewNewSlotItemViewPatch.DoCoroutine(__instance));
-		}
+        if (lootItem.Grids != null && lootItem.Grids.Length <= 0)
+            return;
 
-		private static IEnumerator DoCoroutine(SlotItemView __instance) {
-			for (Int32 i = 0; i < HideSpecialIconPlugin.Instance.FramesToWait.Value; i++) {
-				yield return null;
-			}
+        StaticManager.BeginCoroutine(SlotItemViewNewSlotItemViewPatch.DoCoroutine(__instance));
+    }
 
-			GeneratedGridsView generatedGridsView =
-				__instance.transform.parent.GetComponentInChildren<GeneratedGridsView>();
-			if (generatedGridsView != null) {
-				generatedGridsView.GameObject.SetActive(false);
-			}
-		}
-	}
+    private static IEnumerator DoCoroutine(SlotItemView __instance)
+    {
+        for (Int32 i = 0; i < HideSpecialIconGridsPlugin.Instance.FramesToWait.Value; i++)
+        {
+            yield return null;
+        }
+
+        GeneratedGridsView generatedGridsView = __instance.transform.parent.GetComponentInChildren<GeneratedGridsView>();
+
+        if (generatedGridsView != null)
+            generatedGridsView.GameObject.SetActive(false);
+    }
 }
